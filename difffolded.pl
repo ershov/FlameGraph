@@ -98,10 +98,11 @@ close FILE;
 open FILE, $file2 or die "ERROR: Can't read $file2\n";
 while (<FILE>) {
 	chomp;
-	my ($stack, $count) = (/^(.*)\s+?(\d+(?:\.\d*)?)$/);
-	$stack =~ s/0x[0-9a-fA-F]+/0x.../g if $striphex;
-	$Folded{$stack}{2} += $count;
-	$total2 += $count;
+	if (my ($stack, $count) = (/^(.*)\s+?(\d+(?:\.\d*)?)$/)) {
+		$stack =~ s/0x[0-9a-fA-F]+/0x.../g if $striphex;
+		$Folded{$stack}{2} += $count;
+		$total2 += $count;
+	}
 }
 close FILE;
 
